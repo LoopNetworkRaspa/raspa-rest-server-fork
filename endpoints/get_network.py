@@ -1,13 +1,15 @@
 # encoding: utf-8
+import os
 from typing import List
 
 from pydantic import BaseModel
 
 from server import app, kaspad_client
 
+NETWORK_NAME = os.getenv("NETWORK_NAME")
 
 class NetworkResponse(BaseModel):
-    networkName: str = "kaspa-mainnet"
+    networkName: str = NETWORK_NAME or "raspad"
     blockCount: str = "261357"
     headerCount: str = "23138783"
     tipHashes: List[str] = [

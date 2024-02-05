@@ -1,0 +1,5 @@
+{
+    "commentTranslate.targetLanguage": "uk",
+    "python.analysis.typeCheckingMode": "basic",
+    "remote.autoForwardPortsFallback": 0
+}
