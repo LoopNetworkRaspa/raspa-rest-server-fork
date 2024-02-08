@@ -25,5 +25,5 @@ pipenv run start
 ```
 or
 ```bash
-pipenv run uvicorn main:app --reload --host 0.0.0.0 --port 8080
+pipenv run gunicorn -b 0.0.0.0:8080 -w 1 -k uvicorn.workers.UvicornWorker main:app --timeout 120
 ```

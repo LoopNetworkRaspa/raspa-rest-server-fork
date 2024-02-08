@@ -2,11 +2,12 @@ FROM python:3.10-alpine
 
 ARG REPO_DIR
 
-EXPOSE 8000
+EXPOSE 8080
 
-ENV KASPAD_HOST_1=n.seeder1.kaspad.net:16110
-ARG version
-ENV VERSION=$version
+# ENV KASPAD_HOST_1=n.seeder1.kaspad.net:16110
+# ARG version
+# ENV VERSION=$version
+ENV VERSION="0.0.1"
 
 RUN apk --no-cache add \
   git \
@@ -32,4 +33,4 @@ RUN pipenv install --deploy
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
-CMD pipenv run gunicorn -b 0.0.0.0:8000 -w 1 -k uvicorn.workers.UvicornWorker main:app --timeout 120
+CMD pipenv run gunicorn -b 0.0.0.0:8080 -w 1 -k uvicorn.workers.UvicornWorker main:app --timeout 120
