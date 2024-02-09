@@ -19,8 +19,8 @@ NODE_RPC_URI = os.getenv("NODE_RPC_URI")
 fastapi.logger.logger.setLevel(logging.WARNING)
 
 app = FastAPI(
-    title="Kaspa REST-API server",
-    description="This server is to communicate with kaspa network via REST-API",
+    title="Raspa REST-API server",
+    description="This server is to communicate with raspa network via REST-API",
     version=os.getenv("VERSION", "tbd"),
     contact={
         "name": "lAmeR1"
