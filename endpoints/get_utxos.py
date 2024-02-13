@@ -37,28 +37,28 @@ class UtxoResponse(BaseModel):
 
 
 @app.get(
-    "/addresses/{kaspaAddress}/utxos",
+    "/addresses/{raspaAddress}/utxos",
     response_model=List[UtxoResponse],
-    tags=["Kaspa addresses"],
+    tags=["Raspa addresses"],
 )
 async def get_utxos_for_address(
-    kaspaAddress: str = Path(
-        description=f"Kaspa address as string e.g. {ADDRESS_TYPE}:qqkqkzjvr7zwxxmjxjkmxxdwju9kjs6e9u82uh59z07vgaks6gg62v8707g73",
+    raspaAddress: str = Path(
+        description=f"Raspa address as string e.g. {ADDRESS_TYPE}:qqkqkzjvr7zwxxmjxjkmxxdwju9kjs6e9u82uh59z07vgaks6gg62v8707g73",
         # regex="^kaspa\:[a-z0-9]{61,63}$",
         regex=REGEX,
     )
 ):
     """
-    Lists all open utxo for a given kaspa address
+    Lists all open utxo for a given raspa address
     """
     resp = await kaspad_client.request(
-        "getUtxosByAddressesRequest", params={"addresses": [kaspaAddress]}, timeout=120
+        "getUtxosByAddressesRequest", params={"addresses": [raspaAddress]}, timeout=120
     )
     try:
         return (
             utxo
             for utxo in resp["getUtxosByAddressesResponse"]["entries"]
-            if utxo["address"] == kaspaAddress
+            if utxo["address"] == raspaAddress
         )
     except KeyError:
         if (

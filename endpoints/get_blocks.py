@@ -2,15 +2,14 @@
 import os
 from typing import List
 
-from fastapi import Query, Path, HTTPException
-from fastapi import Response
+from fastapi import HTTPException, Path, Query, Response
 from pydantic import BaseModel
 from sqlalchemy import select
 
 from dbsession import async_session
 from endpoints.get_virtual_chain_blue_score import current_blue_score_data
 from models.Block import Block
-from models.Transaction import Transaction, TransactionOutput, TransactionInput
+from models.Transaction import Transaction, TransactionInput, TransactionOutput
 from server import app, kaspad_client
 
 IS_SQL_DB_CONFIGURED = os.getenv("SQL_URI") is not None
@@ -61,7 +60,7 @@ class BlockResponse(BaseModel):
     blocks: List[BlockModel] | None
 
 
-@app.get("/blocks/{blockId}", response_model=BlockModel, tags=["Kaspa blocks"])
+@app.get("/blocks/{blockId}", response_model=BlockModel, tags=["Raspa blocks"])
 async def get_block(response: Response,
                     blockId: str = Path(regex="[a-f0-9]{64}")):
     """
@@ -107,14 +106,14 @@ async def get_block(response: Response,
     return requested_block
 
 
-@app.get("/blocks", response_model=BlockResponse, tags=["Kaspa blocks"])
+@app.get("/blocks", response_model=BlockResponse, tags=["Raspa blocks"])
 async def get_blocks(response: Response,
                      lowHash: str = Query(regex="[a-f0-9]{64}"),
                      includeBlocks: bool = False,
                      includeTransactions: bool = False):
     """
     Lists block beginning from a low hash (block id). Note that this function tries to determine the blocks from
-    the kaspad node. If this is not possible, the database is getting queryied as backup. In this case the response
+    the raspad node. If this is not possible, the database is getting queryied as backup. In this case the response
     header contains the key value pair: x-data-source: database.
 
     Additionally the fields in verboseData: isChainBlock, childrenHashes and transactionIds can't be filled.
@@ -131,12 +130,12 @@ async def get_blocks(response: Response,
     return resp["getBlocksResponse"]
 
 
-@app.get("/blocks-from-bluescore", response_model=List[BlockModel], tags=["Kaspa blocks"])
+@app.get("/blocks-from-bluescore", response_model=List[BlockModel], tags=["Raspa blocks"])
 async def get_blocks_from_bluescore(response: Response,
                                     blueScore: int = 43679173,
                                     includeTransactions: bool = False):
     """
-    Lists block beginning from a low hash (block id). Note that this function is running on a kaspad and not returning
+    Lists block beginning from a low hash (block id). Note that this function is running on a raspad and not returning
     data from database.
     """
     response.headers["X-Data-Source"] = "Database"

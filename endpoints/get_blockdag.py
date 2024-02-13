@@ -20,10 +20,10 @@ class BlockdagResponse(BaseModel):
     virtualDaaScore: str = "19989141"
 
 
-@app.get("/info/blockdag", response_model=BlockdagResponse, tags=["Kaspa network info"])
+@app.get("/info/blockdag", response_model=BlockdagResponse, tags=["Raspa network info"])
 async def get_blockdag():
     """
-    Get some global Kaspa BlockDAG information
+    Get some global Raspa BlockDAG information
     """
     resp = await kaspad_client.request("getBlockDagInfoRequest")
     return resp["getBlockDagInfoResponse"]

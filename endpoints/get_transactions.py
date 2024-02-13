@@ -3,7 +3,7 @@
 from enum import Enum
 from typing import List
 
-from fastapi import Path, HTTPException, Query, Response
+from fastapi import HTTPException, Path, Query, Response
 from pydantic import BaseModel, parse_obj_as
 from sqlalchemy import Integer
 from sqlalchemy.future import select
@@ -11,7 +11,7 @@ from sqlalchemy.future import select
 from dbsession import async_session
 from endpoints import filter_fields, sql_db_only
 from models.Block import Block
-from models.Transaction import Transaction, TransactionOutput, TransactionInput
+from models.Transaction import Transaction, TransactionInput, TransactionOutput
 from server import app
 
 DESC_RESOLVE_PARAM = "Use this parameter if you want to fetch the TransactionInput previous outpoint details." \
@@ -78,7 +78,7 @@ class PreviousOutpointLookupMode(str, Enum):
 
 @app.get("/transactions/{transactionId}",
          response_model=TxModel,
-         tags=["Kaspa transactions"],
+         tags=["Raspa transactions"],
          response_model_exclude_unset=True)
 @sql_db_only
 async def get_transaction(response: Response,
@@ -162,7 +162,7 @@ async def get_transaction(response: Response,
 
 @app.post("/transactions/search",
           response_model=List[TxModel],
-          tags=["Kaspa transactions"],
+          tags=["Raspa transactions"],
           response_model_exclude_unset=True)
 @sql_db_only
 async def search_for_transactions(txSearch: TxSearch,

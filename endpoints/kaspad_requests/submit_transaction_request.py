@@ -50,13 +50,13 @@ class SubmitTransactionResponse(BaseModel):
 
 
 @app.post("/transactions",
-          tags=["Kaspa transactions"],
+          tags=["Raspa transactions"],
           response_model_exclude_unset=True,
           responses={200: {"model": SubmitTransactionResponse},
                        400: {"model": SubmitTransactionResponse}})
 async def submit_a_new_transaction(body: SubmitTransactionRequest):
     """
-    Forwards the body directly to kaspad with the command submitTransactionRequest
+    Forwards the body directly to raspad with the command submitTransactionRequest
     """
     tx_resp = await kaspad_client.request("submitTransactionRequest",
                                           params=body.dict())

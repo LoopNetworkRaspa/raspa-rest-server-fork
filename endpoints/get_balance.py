@@ -11,27 +11,27 @@ REGEX = os.getenv("REGEX")
 
 
 class BalanceResponse(BaseModel):
-    address: str = "kaspa:pzhh76qc82wzduvsrd9xh4zde9qhp0xc8rl7qu2mvl2e42uvdqt75zrcgpm00"
+    address: str = f"{ADDRESS_TYPE}:pzhh76qc82wzduvsrd9xh4zde9qhp0xc8rl7qu2mvl2e42uvdqt75zrcgpm00"
     balance: int = 38240000000
 
 
 @app.get(
-    "/addresses/{kaspaAddress}/balance",
+    "/addresses/{raspaAddress}/balance",
     response_model=BalanceResponse,
-    tags=["Kaspa addresses"],
+    tags=["Raspa addresses"],
 )
-async def get_balance_from_kaspa_address(
-    kaspaAddress: str = Path(
-        description=f"Kaspa address as string e.g. {ADDRESS_TYPE}:qr0tcyacqqvglzzn6pz3qggjarvwkcfaesc96mnapr6p54pp9k00yszc2cz2g",
+async def get_balance_from_raspa_address(
+    raspaAddress: str = Path(
+        description=f"Raspa address as string e.g. {ADDRESS_TYPE}:qr0tcyacqqvglzzn6pz3qggjarvwkcfaesc96mnapr6p54pp9k00yszc2cz2g",
         # regex="^kaspacustom\:[a-z0-9]{61,63}$",
         regex=REGEX,
     )
 ):
     """
-    Get balance for a given kaspa address
+    Get balance for a given raspa address
     """
     resp = await kaspad_client.request(
-        "getBalanceByAddressRequest", params={"address": kaspaAddress}
+        "getBalanceByAddressRequest", params={"address": raspaAddress}
     )
 
     try:
@@ -54,4 +54,4 @@ async def get_balance_from_kaspa_address(
     except KeyError:
         balance = 0
 
-    return {"address": kaspaAddress, "balance": balance}
+    return {"address": raspaAddress, "balance": balance}

@@ -3,7 +3,7 @@
 from pydantic import BaseModel
 from starlette.responses import PlainTextResponse
 
-from helper import get_kas_price, get_kas_market_data
+from helper import get_kas_market_data, get_kas_price
 from server import app
 
 
@@ -11,10 +11,10 @@ class PriceResponse(BaseModel):
     price: float = 0.025235
 
 
-@app.get("/info/price", response_model=PriceResponse | str, tags=["Kaspa network info"])
+@app.get("/info/price", response_model=PriceResponse | str, tags=["Raspa network info"])
 async def get_price(stringOnly: bool = False):
     """
-    Returns the current price for Kaspa in USD.
+    Returns the current price for Raspa in USD.
     """
     if stringOnly:
         return PlainTextResponse(content=str(await get_kas_price()))
@@ -23,10 +23,10 @@ async def get_price(stringOnly: bool = False):
 
 
 @app.get("/info/market-data",
-         tags=["Kaspa network info"],
+         tags=["Raspa network info"],
          include_in_schema=False)
 async def get_market_data():
     """
-    Returns market data for kaspa.
+    Returns market data for raspa.
     """
     return await get_kas_market_data()
