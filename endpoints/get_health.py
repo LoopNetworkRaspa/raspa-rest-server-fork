@@ -40,8 +40,8 @@ async def health_state():
 
     time_diff = datetime.now() - datetime.fromtimestamp(last_block_time / 1000)
 
-    # if time_diff > timedelta(minutes=10):
-    #     raise HTTPException(status_code=500, detail="Transactions not up to date")
+    if time_diff > timedelta(minutes=10):
+        raise HTTPException(status_code=500, detail="Transactions not up to date")
 
     for i, kaspad_info in enumerate(kaspad_client.kaspads):
         raspads.append({
